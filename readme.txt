@@ -1,4 +1,4 @@
-=== SpamLens ===
+=== SpamLens: Jev AI Spam Protection for Comments and Contact Form 7 ===
 Contributors: veronalabs, mostafa.s1990, kashani
 Tags: spam, comments, antispam, contact form 7, ai
 Requires at least: 6.4
@@ -8,7 +8,7 @@ Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Spam protection for comments, product reviews and Contact Form 7 powered by Jev, TypeSafe AI's decision model.
+Stops spam in comments, WooCommerce reviews and Contact Form 7 with Jev, TypeSafe AI's decision model.
 
 == Description ==
 
