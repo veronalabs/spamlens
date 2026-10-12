@@ -1,0 +1,57 @@
+name: Readme and assets
+
+# Pushes readme.txt and the .wordpress-org images (banners, icon, screenshots) to WordPress.org when they change on
+# main, without a new plugin version: the plugin code on WordPress.org is untouched (IGNORE_OTHER_FILES). Runs only
+# when readme.txt's Stable tag is a version that is already released; while a new version is being prepared on main,
+# its readme waits for the release (deploy.yml ships it with the code).
+# Uses the same `wordpress-org` environment as deploy.yml (variable SVN_USERNAME, secret SVN_PASSWORD); that
+# environment's deployment rules must allow the main branch as well as v* tags.
+on:
+  push:
+    branches: [main]
+    paths:
+      - readme.txt
+      - .wordpress-org/**
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-wordpress-org
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  assets:
+    name: Update readme and assets on WordPress.org
+    runs-on: ubuntu-latest
+    environment:
+      name: wordpress-org
+      url: https://wordpress.org/plugins/spamlens/
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: The readme's Stable tag is already released
+        id: released
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          T=$(grep -oE 'Stable tag: [0-9.]+' readme.txt | awk '{print $3}')
+          if grep -qiE '^= *Unreleased *=' readme.txt; then
+            # Notes for the next version wait for its release; WordPress.org must never show an "Unreleased" section.
+            echo "::notice::readme.txt has an Unreleased section; it goes out with the next release."
+            echo "ok=no" >> "$GITHUB_OUTPUT"
+          elif gh release view "v$T" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "ok=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Stable tag $T is not released yet; the readme goes out with that release."
+            echo "ok=no" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: 10up/action-wordpress-plugin-asset-update@stable
+        if: steps.released.outputs.ok == 'yes'
+        env:
+          SVN_USERNAME: ${{ vars.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: spamlens
+          ASSETS_DIR: .wordpress-org
+          IGNORE_OTHER_FILES: true
