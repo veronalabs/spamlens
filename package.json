@@ -37,7 +37,7 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.1.1",
     "@wordpress/api-fetch": "^7.55.0",
-    "@wordpress/env": "^11.16.0",
+    "@wordpress/env": "^12.2.0",
     "@wordpress/i18n": "^6.28.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
