@@ -48,7 +48,7 @@ class RestControllerTest extends SpamLens_TestCase {
 	 * @return WP_REST_Response
 	 */
 	private function request( string $method, string $route, array $body = array() ): WP_REST_Response {
-		$request = new WP_REST_Request( $method, '/' . RestController::NAMESPACE . $route );
+		$request = new WP_REST_Request( $method, '/' . RestController::REST_NAMESPACE . $route );
 		if ( $body ) {
 			$request->set_header( 'Content-Type', 'application/json' );
 			$request->set_body( wp_json_encode( $body ) );
@@ -59,7 +59,7 @@ class RestControllerTest extends SpamLens_TestCase {
 	public function test_routes_are_registered() {
 		$routes = rest_get_server()->get_routes();
 		foreach ( array( '/settings', '/test', '/calibration/sample', '/calibration/batch', '/stats', '/stats/reset', '/comments/check-pending' ) as $route ) {
-			$this->assertArrayHasKey( '/' . RestController::NAMESPACE . $route, $routes, $route );
+			$this->assertArrayHasKey( '/' . RestController::REST_NAMESPACE . $route, $routes, $route );
 		}
 	}
 

@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class RestController {
 
-	const NAMESPACE = 'spamlens/v1';
+	const REST_NAMESPACE = 'spamlens/v1';
 
 	const CALIBRATION_BATCH  = 10;
 	const CALIBRATION_BUDGET = 20;
@@ -76,7 +76,7 @@ class RestController {
 		$admin = array( $this, 'can_manage' );
 
 		register_rest_route(
-			self::NAMESPACE,
+			self::REST_NAMESPACE,
 			'/settings',
 			array(
 				array(
@@ -99,7 +99,7 @@ class RestController {
 		);
 
 		register_rest_route(
-			self::NAMESPACE,
+			self::REST_NAMESPACE,
 			'/test',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -109,7 +109,7 @@ class RestController {
 		);
 
 		register_rest_route(
-			self::NAMESPACE,
+			self::REST_NAMESPACE,
 			'/calibration/sample',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -127,7 +127,7 @@ class RestController {
 		);
 
 		register_rest_route(
-			self::NAMESPACE,
+			self::REST_NAMESPACE,
 			'/calibration/batch',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -154,7 +154,7 @@ class RestController {
 		);
 
 		register_rest_route(
-			self::NAMESPACE,
+			self::REST_NAMESPACE,
 			'/stats',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
@@ -164,7 +164,7 @@ class RestController {
 		);
 
 		register_rest_route(
-			self::NAMESPACE,
+			self::REST_NAMESPACE,
 			'/stats/reset',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -174,7 +174,7 @@ class RestController {
 		);
 
 		register_rest_route(
-			self::NAMESPACE,
+			self::REST_NAMESPACE,
 			'/comments/(?P<id>\d+)/recheck',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -190,7 +190,7 @@ class RestController {
 		);
 
 		register_rest_route(
-			self::NAMESPACE,
+			self::REST_NAMESPACE,
 			'/comments/check-pending',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
