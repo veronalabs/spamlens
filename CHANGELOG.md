@@ -6,6 +6,9 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+- Tested with WordPress 7.2.
+- PHP 8.6: no more deprecation notice for the REST namespace constant, renamed from `RestController::NAMESPACE` to `RestController::REST_NAMESPACE`.
+
 ## [1.0.1] - 2026-09-28
 
 Fixes from the WordPress.org review.
