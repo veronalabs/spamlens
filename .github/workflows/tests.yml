@@ -127,6 +127,10 @@ jobs:
       - uses: wordpress/plugin-check-action@v1
         with:
           build-dir: dist/spamlens
+          # False positive in Plugin Check 2.2.0: React 19's react-dom keeps the "react.element" symbol to reject old
+          # elements, and the check reads it as a pre-19 build. A bundled older React is still reported as
+          # inlined_react. Remove once https://github.com/WordPress/plugin-check/issues/1548 is fixed.
+          ignore-codes: inlined_react_dom
 
   version:
     name: Version consistency
